@@ -1,14 +1,41 @@
-// 1. page(우리는 원래 단일 page) component -> 다중 page
-// 2. Router.js file 생성 -> router를 구성하는 설정 code 작성
-//    (ex : redux 할 때도 설정 file을 만들어서 주입)
-// 3. App.jsx import (2번) 후 적용  : 주입
-// 4. page 이동 test
-
 import React from "react";
-import Router from "./shared/Router";
+import { useEffect, useState } from "react";
 
 function App() {
-  return <Router />;
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => response.json())
+      .then((json) => {
+        setData([...json]);
+        return console.log(json);
+      });
+  }, []);
+
+  return (
+    <>
+      <h3>JSONPlacehoder DATA</h3>
+      {data.map((item) => {
+        return (
+          <div
+            key={item.id}
+            style={{
+              border: "1px solid black",
+              margin: "5px",
+            }}
+          >
+            <ul>
+              <li>{item.userId}</li>
+              <li>{item.id}</li>
+              <li>{item.title}</li>
+              <li>{item.body}</li>
+            </ul>
+          </div>
+        );
+      })}
+    </>
+  );
 }
 
 export default App;

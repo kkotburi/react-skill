@@ -1,25 +1,20 @@
 import React from "react";
-import { useNavigate, useLocation, Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { data } from "../shared/data";
 
 function Works() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  //   const params = useParams();
-
-  console.log("location: ", location);
-  //   console.log("params: ", params);
-
   return (
     <>
-      <div>Works</div>
-      <button
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        Home page로 이동
-      </button>
-      <Link to="/contact">contact page로 이동</Link>
+      <h3>할일 목록</h3>
+      {data.map((item) => {
+        return (
+          <div key={item.id}>
+            {item.id}
+            &nbsp;
+            <Link to={`/works/${item.id}`}>{item.todo}</Link>
+          </div>
+        );
+      })}
     </>
   );
 }
